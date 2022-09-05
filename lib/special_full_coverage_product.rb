@@ -14,8 +14,6 @@ class SpecialFullCoverageProduct < FullCoverageProduct
 
   def new_price
     super
-    if @sell_in < 0
-      @price = 0
-    end
+    @price = 0 if @sell_in.negative?
   end
 end

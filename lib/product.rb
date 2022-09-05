@@ -6,11 +6,9 @@ class Product
 
   class << self
     def new(name, sell_in, price)
-      begin
-        "#{name.delete(' ')}Product".constantize.new(name, sell_in, price)
-      rescue
-        DefaultProduct.new(name, sell_in, price)
-      end
+      "#{name.delete(' ')}Product".constantize.new(name, sell_in, price)
+    rescue StandardError
+      DefaultProduct.new(name, sell_in, price)
     end
   end
 end
