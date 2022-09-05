@@ -3,12 +3,13 @@
 require_relative '../lib/load'
 require 'pry'
 
-describe Product do
-  let(:valid_product) { Product.new('Full Coverage', 10, 20) }
-  let(:product_name_blank) { Product.new(nil, 10, 20) }
-  let(:product_sell_in_blank) { Product.new('Full Coverage', nil, 20) }
-  let(:product_sell_in_negative) { Product.new('Full Coverage', 10, -1) }
-  let(:product_price_blank) { Product.new('Full Coverage', 10, nil) }
+describe DefaultProduct do
+  let(:valid_product) { DefaultProduct.new('Full Coverage', 10, 20) }
+  let(:product_name_blank) { DefaultProduct.new(nil, 10, 20) }
+  let(:product_sell_in_blank) { DefaultProduct.new('Full Coverage', nil, 20) }
+  let(:product_sell_in_negative) { DefaultProduct.new('Full Coverage', 10, -1) }
+  let(:product_price_blank) { DefaultProduct.new('Full Coverage', 10, nil) }
+  # let(:product_name_not_found) { DefaultProduct.new('Any Name', 10, 20) }
 
   context 'Basic validations' do
     it 'With valid product' do
@@ -21,6 +22,11 @@ describe Product do
         expect(product_name_blank.valid?).to eq false
         expect(product_name_blank.errors.full_messages.to_s).to include "Name can't be blank"
       end
+
+      # it 'should exists' do
+      #   expect(product_name_not_found.valid?).to eq false
+      #   expect(product_name_not_found.errors.full_messages.to_s).to include 'DefaultProduct name not found'
+      # end
     end
 
     it 'sell in can\'t blank' do
