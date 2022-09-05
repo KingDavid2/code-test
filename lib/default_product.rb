@@ -5,10 +5,7 @@ class DefaultProduct
   include ActiveModel::Model
   include ActiveSupport::Inflector
 
-  SELL_IN_CHANGE = -1
-  PRICE_CHANGE = -1
-
-  attr_accessor :name, :sell_in, :price
+  attr_reader :name, :sell_in, :price
 
   validates :name, :sell_in, :price, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }
@@ -17,5 +14,32 @@ class DefaultProduct
     @name = name
     @sell_in = sell_in
     @price = price
+  end
+
+  def sell_in_change
+    -1
+  end
+
+  def price_change
+    @sell_in >= 0 ? -1 : -2
+  end
+
+  def new_sell_in
+    @sell_in += sell_in_change
+  end
+
+  def new_price
+    price = @price + price_change
+    @price = price >= 0 ? price : 0
+  end
+
+  def show
+    "#{name}, #{sell_in}, #{price}"
+  end
+
+  def next_day
+    new_sell_in
+    new_price
+    show
   end
 end
